@@ -1,19 +1,37 @@
-import {TodoForm} from "./components/TodoForm";
-import {useState} from "react";
-import {Todo} from "./types";
-import {TodoList} from "./components/TodoList/component";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from "react-router-dom";
+import {About} from "./pages/Home";
+import {Home} from "./pages/About";
+import {MainTemplate} from "./templates/MainTemplate/component";
+import {FormTemplate} from "./templates/FormTemplate/component";
+import {Story} from "./pages/Story";
+import './styles.scss';
 
 export const App = () => {
-    const [list, setList] = useState<ReadonlyArray<Todo>>([]);
-
-    const addItem = (item: Todo) => {
-        setList([...list, item]); // spread operator
-    }
-
-    return (<div className="container">
-        <TodoForm onSubmit={addItem}/>
-        <br/>
-        Todo List
-        <TodoList list={list}/>
-    </div>)
+    return (
+        <Router>
+            <Switch>
+                <Route path="/form">
+                    <FormTemplate/>
+                </Route>
+                <Route path="/story">
+                    <MainTemplate>
+                        <Story />
+                    </MainTemplate>
+                </Route>
+                <Route path="/about">
+                    <MainTemplate>
+                        <About />
+                    </MainTemplate>
+                </Route>
+                <Route path="/">
+                    <MainTemplate>
+                        <Home />
+                    </MainTemplate>
+                </Route>
+            </Switch>
+        </Router>)
 }
